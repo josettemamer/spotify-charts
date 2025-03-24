@@ -1,0 +1,16 @@
+# Local secrets
+.env
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Playwright logs
+playwright.log
+trace.zip
+
+# SQLite database
+spotify_charts.db
+
+# Scraped JSON data
+weekly_data/*.json
