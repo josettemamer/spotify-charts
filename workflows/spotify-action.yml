@@ -1,0 +1,40 @@
+name: One-Time Spotify Charts Action
+
+on:
+  workflow_dispatch:  # Manual trigger only
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+
+    env:
+      SPOTIFY_USERNAME: ${{ secrets.SPOTIFY_USERNAME }}
+      SPOTIFY_PASSWORD: ${{ secrets.SPOTIFY_PASSWORD }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          playwright install
+
+      - name: Install Xvfb for headless browser support
+        run: sudo apt-get install -y xvfb
+
+      - name: Run get_spotify_token.py (via Xvfb)
+        run: |
+          xvfb-run --auto-servernum --server-args="-screen 0 1920x1080x24" python get_spotify_token.py
+
+      - name: Run fetch_weekly_charts.py
+        run: python fetch_weekly_charts.py
+
+      - name: Run import_charts_to_sqlite.py
+        run: python import_charts_db.py --all
