@@ -4,7 +4,7 @@ on:
   workflow_dispatch:  # Manual trigger only
 
 jobs:
-  scrape:
+  action:
     runs-on: ubuntu-latest
 
     env:
