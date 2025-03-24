@@ -27,11 +27,10 @@ Install dependencies:
 pip install -r requirements.txt
 ```
 
-Create a `.env` file:
+Create a `.env` file using the provided template (this file is ignored by Git):
 
 ```
-SPOTIFY_USERNAME=your_email@example.com
-SPOTIFY_PASSWORD=your_password
+cp .env.example .env
 ```
 
 Then run:
